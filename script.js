@@ -1,145 +1,172 @@
-// 星空背景效果
-const canvas = document.getElementById('starfield');
-const ctx = canvas.getContext('2d');
+// 游戏变量
+let playerScore = 0;
+let computerScore = 0;
+let tieScore = 0;
+let isAutoPlaying = false;
+let autoPlayInterval;
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// DOM元素
+const playerScoreElement = document.getElementById('player-score');
+const computerScoreElement = document.getElementById('computer-score');
+const tieScoreElement = document.getElementById('tie-score');
+const roundResultElement = document.getElementById('round-result');
+const playerChoiceElement = document.getElementById('player-choice');
+const computerChoiceElement = document.getElementById('computer-choice');
+const rockButton = document.getElementById('rock');
+const paperButton = document.getElementById('paper');
+const scissorsButton = document.getElementById('scissors');
+const resetButton = document.getElementById('reset-btn');
+const autoPlayButton = document.getElementById('auto-play');
+
+// 图标映射
+const choiceIcons = {
+    'rock': '<i class="far fa-hand-rock"></i>',
+    'paper': '<i class="far fa-hand-paper"></i>',
+    'scissors': '<i class="far fa-hand-scissors"></i>'
+};
+
+// 游戏逻辑
+function getComputerChoice() {
+    const choices = ['rock', 'paper', 'scissors'];
+    const randomIndex = Math.floor(Math.random() * 3);
+    return choices[randomIndex];
 }
 
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-// 创建星星
-const stars = [];
-const starCount = 200;
-
-class Star {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speed = Math.random() * 0.5 + 0.1;
-        this.brightness = Math.random() * 0.5 + 0.5;
-        this.color = Math.random() > 0.7 ? '#4a6fa5' : '#ffcc00';
+function determineWinner(playerChoice, computerChoice) {
+    if (playerChoice === computerChoice) {
+        return 'tie';
     }
     
-    update() {
-        this.y += this.speed;
-        if (this.y > canvas.height) {
-            this.y = 0;
-            this.x = Math.random() * canvas.width;
-        }
-        
-        // 闪烁效果
-        this.brightness += (Math.random() - 0.5) * 0.1;
-        this.brightness = Math.max(0.3, Math.min(1, this.brightness));
+    if (
+        (playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'paper' && computerChoice === 'rock') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+        return 'player';
     }
     
-    draw() {
-        ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.brightness;
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // 光晕效果
-        ctx.beginPath();
-        const gradient = ctx.createRadialGradient(
-            this.x, this.y, 0,
-            this.x, this.y, this.size * 3
-        );
-        gradient.addColorStop(0, this.color);
-        gradient.addColorStop(1, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fill();
-    }
+    return 'computer';
 }
 
-// 初始化星星
-for (let i = 0; i < starCount; i++) {
-    stars.push(new Star());
-}
-
-// 动画循环
-function animateStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // 绘制深色背景
-    ctx.fillStyle = '#1a1a1a';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    stars.forEach(star => {
-        star.update();
-        star.draw();
-    });
-    
-    requestAnimationFrame(animateStars);
-}
-
-animateStars();
-
-// 导航栏滚动效果
-window.addEventListener('scroll', function() {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.style.backgroundColor = 'rgba(26, 26, 26, 0.95)';
-        header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
+function updateScores(winner) {
+    if (winner === 'player') {
+        playerScore++;
+        playerScoreElement.textContent = playerScore;
+        roundResultElement.textContent = '你赢了！';
+        roundResultElement.style.color = '#000';
+    } else if (winner === 'computer') {
+        computerScore++;
+        computerScoreElement.textContent = computerScore;
+        roundResultElement.textContent = '我赢了！';
+        roundResultElement.style.color = '#000';
     } else {
-        header.style.backgroundColor = 'rgba(26, 26, 26, 0.9)';
-        header.style.boxShadow = 'none';
+        tieScore++;
+        tieScoreElement.textContent = tieScore;
+        roundResultElement.textContent = '平局！';
+        roundResultElement.style.color = '#666';
+    }
+    
+    // 添加动画效果
+    roundResultElement.classList.remove('fade-in');
+    void roundResultElement.offsetWidth; // 触发重排以重新启动动画
+    roundResultElement.classList.add('fade-in');
+}
+
+function updateChoiceDisplay(playerChoice, computerChoice) {
+    playerChoiceElement.innerHTML = choiceIcons[playerChoice];
+    computerChoiceElement.innerHTML = choiceIcons[computerChoice];
+    
+    // 添加动画效果
+    playerChoiceElement.classList.remove('pulse');
+    computerChoiceElement.classList.remove('pulse');
+    void playerChoiceElement.offsetWidth;
+    void computerChoiceElement.offsetWidth;
+    playerChoiceElement.classList.add('pulse');
+    computerChoiceElement.classList.add('pulse');
+}
+
+    
+    const computerChoice = getComputerChoice();
+    const winner = determineWinner(playerChoice, computerChoice);
+    
+    updateChoiceDisplay(playerChoice, computerChoice);
+    updateScores(winner);
+}
+
+// 重置游戏
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    tieScore = 0;
+    
+    playerScoreElement.textContent = playerScore;
+    computerScoreElement.textContent = computerScore;
+    tieScoreElement.textContent = tieScore;
+    
+    roundResultElement.textContent = '游戏已重置，请选择你的出拳';
+    roundResultElement.style.color = '#000';
+    
+    playerChoiceElement.innerHTML = '—';
+    computerChoiceElement.innerHTML = '—';
+    
+
+// 事件监听
+rockButton.addEventListener('click', () => playRound('rock'));
+paperButton.addEventListener('click', () => playRound('paper'));
+scissorsButton.addEventListener('click', () => playRound('scissors'));
+resetButton.addEventListener('click', resetGame);
+autoPlayButton.addEventListener('click', toggleAutoPlay);
+
+// 键盘快捷键支持
+document.addEventListener('keydown', (event) => {
+    // 按R键选择石头
+    if (event.key === 'r' || event.key === 'R') {
+        playRound('rock');
+        rockButton.classList.add('pulse');
+        setTimeout(() => rockButton.classList.remove('pulse'), 300);
+    }
+    // 按P键选择布
+    else if (event.key === 'p' || event.key === 'P') {
+        playRound('paper');
+        paperButton.classList.add('pulse');
+        setTimeout(() => paperButton.classList.remove('pulse'), 300);
+    }
+    // 按S键选择剪刀
+    else if (event.key === 's' || event.key === 'S') {
+        playRound('scissors');
+        scissorsButton.classList.add('pulse');
+        setTimeout(() => scissorsButton.classList.remove('pulse'), 300);
+    }
+    // 按空格键重置游戏
+    else if (event.key === ' ') {
+        resetGame();
+        resetButton.classList.add('pulse');
+        setTimeout(() => resetButton.classList.remove('pulse'), 300);
+    }
+    // 按A键切换自动游戏
+    else if (event.key === 'a' || event.key === 'A') {
+        toggleAutoPlay();
+        autoPlayButton.classList.add('pulse');
+        setTimeout(() => autoPlayButton.classList.remove('pulse'), 300);
     }
 });
 
-// 表单提交处理
-document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // 获取表单值
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    
-    // 简单验证
-    if (name && email) {
-        alert(`谢谢 ${name}！您的消息已发送。我会尽快通过 ${email} 与您联系。`);
-        document.getElementById('contact-form').reset();
-    } else {
-        alert('请填写所有必填字段！');
-    }
-});
-
-// 导航链接点击效果
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        // 移除所有active类
-        document.querySelectorAll('.nav-links a').forEach(item => {
-            item.classList.remove('active');
-        });
+// 平滑滚动导航
+document.querySelectorAll('.nav-links a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        // 为当前点击的链接添加active类
-        this.classList.add('active');
-        
-        // 平滑滚动到目标区域
         const targetId = this.getAttribute('href');
-        if (targetId !== '#') {
-            e.preventDefault();
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
         }
     });
 });
 
-// 页面加载动画
-window.addEventListener('load', function() {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.8s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-});
+// 初始化游戏
+resetGame();
