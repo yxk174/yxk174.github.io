@@ -5,211 +5,32 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello,friend!</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f2f5f6;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #175287 0%, #8fb1e7 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-        
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 20px;
-            object-fit: cover;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: transform 0.3s;
-        }
-        
-        .social-links a:hover {
-            transform: translateY(-3px);
-        }
-        
-        section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2rem;
-            color: #333;
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-  
-        
-        .skill {
-            background: #e9ecef;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .project-img {
-            height: 200px;
-            width: 100%;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-        }
-        
-        .project-content {
-            padding: 20px;
-        }
-        
-        .project-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        
-        button {
-            background: #183e9e;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-        
-        button:hover {
-            background: #313a69;
-        }
-        
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-        }
-        
-        @media (max-width: 768px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            header {
-                padding: 60px 0;
-            }
-            
-            section {
-                padding: 50px 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 装饰线条 -->
+    <div class="line-decoration"></div>
     <header>
         <div class="container">
 
             <h1>欢迎来到yxk174的个人主页！</h1>
-            <p class="subtitle">Welcome to yxk174's personal homepage!</p>
-            <div class="social-links">
-                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" title="Wechat"><i class="fab fa-linkedin"></i></a>
-                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
+            <div class="header-line"></div>
+            <p class="subtitle">Welcome to yxk174's personal homepage!</p>  
     </header>
+
+    <!-- 导航 -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#intro">自我介绍</a></li>
+            <li><a href="#game">来猜拳吧</a></li>
+            <li><a href="#skills">其他事情</a></li>
+            <li><a href="#contact">联系方式</a></li>
+        </ul>
+    </nav>
+    
+    <!-- 装饰线条 -->
+    <div class="line-decoration"></div>
     
     <section id="about">
         <div class="container">
@@ -217,50 +38,68 @@
             <img src="https://github.com/yxk174.png" alt="个人头像" class="profile-img">
             <div class="about-content">
                 <div class="about-text">
-                    <p>我是一名兴趣广泛的创作者，喜爱绘画、阅读、自然、思考、设计、数学和编程，并致力于在以上活动中提高自身素质和做出贡献（尽管在每一项的具体水平上都有许多进步的空间XD）。</p>
-                    <p> I'm a creator with diverse interests, passionate about drawing, reading, nature, contemplation, design, mathematics, and programming. I strive to enhance my skills and make meaningful contributions in each of these areas—depite my lack of skill in every one of them XD.</p>
-                    <p>我相信学习、创造和共享可以让人们的生活更加美好，并正为此努力着。</p>
-                    <p>I believe that learning, creating, and sharing can make people's lives better, and I am working towards this goal.</p>
+                    <p>创作者</p>
+                    <p> Homo sapiens</p>
+                    <p>我的诗一页页一行行/全是世界/全是物质</p>
+                    <p>My poems, page by page, line by line, all the world, all matter.</p>
                 
                 </div>
             </div>
         </div>
     </section>
-    
-    <section id="projects" style="background: #f9f9f9;">
-        <div class="container">
-            <h2 class="section-title">我的作品</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">项目图片</div>
-                    <div class="project-content">
-                        <h3 class="project-title">数字作品集</h3>
-                        <p>包括使用processing等软件制作的动态艺术效果、可交互的数学和算法可视化程序等内容</p>
+
+     <!-- 猜拳游戏区域 -->
+        <section class="game-section" id="game">
+            <h2>猜拳游戏</h2>
+            <div class="game-container">
+                <div class="game-status">
+                    <div class="score">
+                        玩家: <span id="player-score">0</span> | 
+                        电脑: <span id="computer-score">0</span> |
+                        平局: <span id="tie-score">0</span>
+                    </div>
+                    <div class="round-result" id="round-result">请选择你的出拳</div>
+                </div>
+                
+                <div class="selection-display">
+                    <div class="player-selection">
+                        <div>玩家选择</div>
+                        <div class="selection-icon" id="player-choice">—</div>
+                    </div>
+                    <div class="computer-selection">
+                        <div>电脑选择</div>
+                        <div class="selection-icon" id="computer-choice">—</div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-img">项目图片</div>
-                    <div class="project-content">
-                        <h3 class="project-title">实体作品集</h3>
-                        <p>包括硬件项目、建模、装置、粘土作品等内容</p>
-                    </div>
+                
+                <div class="choices">
+                    <button class="choice-btn" id="rock" title="石头">
+                        <i class="far fa-hand-rock"></i>
+                    </button>
+                    <button class="choice-btn" id="paper" title="布">
+                        <i class="far fa-hand-paper"></i>
+                    </button>
+                    <button class="choice-btn" id="scissors" title="剪刀">
+                        <i class="far fa-hand-scissors"></i>
+                    </button>
                 </div>
-                <div class="project-card">
-                    <div class="project-img">项目图片</div>
-                    <div class="project-content">
-                        <h3 class="project-title">绘画和原型</h3>
-                        <p>包括绘画作品、幻想生物、幻想世界观、以及一些奇怪的想法</p>
-                    </div>
+                
+                <div class="game-controls">
+                    <button class="control-btn" id="reset-btn">重来</button>
                 </div>
-                <div class="project-card">
-                    <div class="project-img">项目图片</div>
-                    <div class="project-content">
-                        <h3 class="project-title">文章</h3>
-                        <p>包括每日一题、技术文章、大模型工具测评、小说、自学心得等</p>
-                    </div>
+                
+                <div class="game-rules">
+                    <h3>游戏规则</h3>
+                    <ul>
+                        <li>石头战胜剪刀，剪刀战胜布，布战胜石头</li>
+                        <li>点击上方三个图标选择你的出拳</li>
+                        <li>点击"重来"清空分数</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+
     
     <section id="contact">
         <div class="container">
@@ -284,23 +123,35 @@
             </div>
         </div>
     </section>
-    
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 yxk174. 保留所有权利.</p>
-        </div>
-    </footer>
-    
-    <!-- Font Awesome 图标库 -->
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>-->
-    
-    <script>
+
+        <script>
         // 简单的表单提交处理
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('感谢您的留言！我会尽快回复 :-）。');
+            alert('感谢您的留言！我会尽快回复 :-）');
             this.reset();
         });
     </script>
+    
+    <!-- 装饰线条 -->
+    <div class="line-decoration"></div>
+
+    <!-- 页脚区域 -->
+    <footer id="contact">
+        <div class="social-links">
+            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-codepen"></i></a>
+            <a href="#" class="social-icon"><i class="far fa-envelope"></i></a>
+        </div>
+        
+    </footer>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="script.js"></script>
 </body>
 </html>
+    
+</body>
+</html>
+
